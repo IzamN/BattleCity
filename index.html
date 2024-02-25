@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Battle city</title>
+</head>
+<body>
+    
+    <script src="./engine/Loader.js"> </script>
+        <!-- //1) загрузчик(данные на клиент загружать )
+        //2) отображение изображением , обновление, работас с canvas !application!
+        //3) Rendering -->
+    <script>
+        const {Loader}=GameEngine;
+        const loader =new Loader;
+        //add in order for load image
+        loader.addImage('letter','static/letter.png')
+        loader.addJson('personInfo', 'static/persons.json')
+        loader.load(()=>{console.log('all images is loaded')})
+        
+    </script>    
+   
+</body>
+</html>
