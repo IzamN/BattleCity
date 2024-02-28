@@ -1,5 +1,4 @@
 (function(){
-
     'use strict';
     class Loader {
         constructor(){
@@ -22,7 +21,16 @@
         addJson(name, address){
             this.loadOrder.jsons.push({name, address})
         }
-        //загружение данных на страницу 
+        //получение картинки которую по имени запросили
+        getImage(name){
+            return this.resources.images[name];
+        }
+        //получение данных по названию которые мы запросили и у которые уже не в очереди, а в ресурсах
+        getJson(name){
+            return this.resources.jsons[name];
+
+        }
+        //загружение данных в ресусры и удаляем из очереди
         load (callback){
             const promises=[]
             for (const imageData of this.loadOrder.images ){
@@ -52,7 +60,7 @@
                 }
             Promise.all(promises).then(()=>callback())
         }
-        // получение фотографии по адресу с сервера
+        // получение одной фотографии по адресу с сервера из статического метода
         static loadImage (src){
             return new Promise(function(resolve, reject){
                 try{
@@ -67,7 +75,7 @@
                 }
             })
         }
-        //получение json по адресу с сервера ,json file load with help FETCH
+        //получение одного json по адресу с сервера из статического метода,json file load with help FETCH
         static loadJson(address){
             return new Promise(function(resolve, reject){
                 fetch(address).then(result=>result.json()

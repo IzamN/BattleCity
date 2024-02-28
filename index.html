@@ -6,18 +6,74 @@
     <title>Battle city</title>
 </head>
 <body>
-    
+    <script src="./engine/DisplayObject.js"></script>
     <script src="./engine/Loader.js"> </script>
+    <script src="./engine/Render.js"></script>
+    <script src="./engine/Sprite.js"></script>
+    <script src="./engine/Container.js"></script>
+   
         <!-- //1) загрузчик(данные на клиент загружать )
         //2) отображение изображением , обновление, работас с canvas !application!
         //3) Rendering -->
     <script>
-        const {Loader}=GameEngine;
+        const {Loader, Render, Sprite, Container}=GameEngine;
         const loader =new Loader;
-        //add in order for load image
+        let sprite=null
+        const render=new Render({
+            width:600,
+            height:600,
+            background: 'gray',
+            //stamp -отметка времени
+            update(timeStamp){
+               if (sprite==null) return;
+                // sprite.frame.x=sprite.texture.width/2+200*Math.cos(timeStamp/500)
+                // sprite.frame.y=sprite.texture.width/2+200*Math.sin(timeStamp/500)
+
+                // sprite.x=render.canvas.width/3 +200*Math.cos(timeStamp/500)
+                // sprite.y=render.canvas.height/3+200*Math.sin(timeStamp/500)
+              
+               
+            }
+
+        });
+        
+        document.body.append(render.canvas);
+
+        //add in order for load image and json file
         loader.addImage('letter','static/letter.png')
         loader.addJson('personInfo', 'static/persons.json')
-        loader.load(()=>{console.log('all images is loaded')})
+
+        loader.load(()=>{
+            sprite=new Sprite(loader.getImage('letter'),{
+                // x:0, 
+                // y:0, 
+                // anchorX:0, 
+                // anchorY:0, 
+                scale:0.25
+                // width:300,height:300
+            });
+
+            const container=new Container();
+            render.stage.add(container)
+
+            container.add(sprite);
+            sprite.absoluteX=0;
+            sprite.absoluteY=0;
+            
+
+            
+        //    sprite.frame.width=200
+        //    sprite.frame.height=200
+        //    sprite.width=200
+        //    sprite.height=200
+            
+            
+        })
+
+
+        
+       
+        
         
     </script>    
    
