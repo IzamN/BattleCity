@@ -22,8 +22,16 @@
             // this.y=args.y || 0
             // this.anchorX= args.anchorX || 0
             // this.anchorY=args.anchorY || 0
-             this.width=args.width || this.frame.width //ширина и высота текстуры
-             this.height=args.height || this.frame.height
+            //  this.width=args.width || this.frame.width //ширина и высота текстуры
+            //  this.height=args.height || this.frame.height
+            
+            if (args.width === undefined) {
+                this.width = this.frame.width
+            }
+    
+            if (args.height === undefined) {
+                this.height = this.frame.height
+            }
           
           
         }
@@ -71,6 +79,10 @@
 
 
         draw(canvas, context){
+            context.save()
+            context.translate(this.x, this.y) //this.x this.y 1/2canvas
+            context.rotate(-this.rotation)
+            context.scale(this.scaleX, this.scaleY)
             context.drawImage(
                 this.texture,
                 //координаты откуда часть изображние из всего изображение начинать вырезать
@@ -81,11 +93,13 @@
                 //координаты на canvas куда начинать нам вставлять вырезанное изображние
                 // this.x,
                 // this.y,
-                this.absoluteX,
-                this.absoluteY,
+                this.absoluteX-this.x, //center of sprite
+                this.absoluteY-this.y,
                 this.width,
                 this.height
+                
             )
+            context.restore()
 
         }
     }

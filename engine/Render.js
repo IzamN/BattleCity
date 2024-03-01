@@ -1,7 +1,7 @@
 (function(){
     'use strict'
     class Render{
-        constructor(args){
+        constructor(args={}){
             this.canvas=document.createElement('canvas');
             this.context=this.canvas.getContext('2d');
             this.canvas.width=args.width || 50 ;

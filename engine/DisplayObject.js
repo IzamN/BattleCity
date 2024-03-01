@@ -2,19 +2,21 @@
     'use strict'
     //любой объект который нужно отобразить sprite json container 
     class DisplayObject{
-        constructor(args){
+        constructor(args={}){
             this.x=args.x || 0
             this.y=args.y || 0
             this.width=args.width || 0
             this.height=args.height || 0
-            this.rotation =args.rotation || 0
-            this.anchorX= args.anchorX || 0
+            this.rotation=args.rotation || 0
+            this.anchorX=args.anchorX || 0
             this.anchorY=args.anchorY || 0
+            // this.scale=args.scale || 0
             this.scaleX=args.scaleX || 1
             this.scaleY=args.scaleY || 1
+
+            this.parent=null //ссылается на следющей выще эелемент по иерархии например sprite может ссылаться на container
             if (args.scale!==undefined){
                 this.setScale(args.scale)
-
             }
 
         }
@@ -39,7 +41,15 @@
         }
 
         draw(){}
-        
+        setParent(parent){
+            if (this.parent){
+                this.parent.remove(this)
+            }
+            if (parent) {
+                parent.add(this)
+                this.parent=parent
+            }
+        }
         setScale(scale){
             this.scaleX=scale
             this.scaleY=scale

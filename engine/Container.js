@@ -7,22 +7,32 @@
             super(args)
             this.displayObjects=[]
 
-            delete this.width //удаляем так как не нужные поля для контейнера но вообще делать не рекомендуется так
-            delete this.height 
         }
 
-        
         add(displayObject){
             if (!this.displayObjects.includes(displayObject)){
                 this.displayObjects.push(displayObject)
+                displayObject.setParent(this)
+               
             }
         }
-        remove(){}
+        remove(displayObject){
+            if (this.displayObjects.includes(displayObject)){
+                const index=this.displayObjects.indexOf(displayObject)
+                this.displayObjects.splice(index,1)
+                displayObject.setParent(null)
+            }
+        }
         //класс контейнер должен передать всем своим дочерним элементам(картиникам) функцию отрисовки
         draw(canvas, context){
+            context.save()
+            context.translate(this.x, this.y)
+            context.rotate(-this.rotation)
+            context.scale(this.scaleX, this.scaleY)
             for(const displayObject of this.displayObjects){
                 displayObject.draw(canvas, context) //это draw в самом sprite
             }
+             context.restore()
         }
     }
     window.GameEngine=window.GameEngine || {}
